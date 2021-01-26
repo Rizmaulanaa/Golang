@@ -1,0 +1,143 @@
+Answer 0 
+
+func main(){
+firstNumber := 0
+   secondNumber := 1
+   for i := 0; i < 10; i++ {
+      fib := firstNumber
+      firstNumber = secondNumber
+      secondNumber = firstNumber+fib
+      fmt.Println(fib)
+   }
+} 
+
+func main(){
+firstNumber := 99
+   secondNumber := 100
+   for i := 99; i < 100; i++ {
+      fib := firstNumber
+      firstNumber = secondNumber
+      secondNumber = firstNumber+fib
+      fmt.Println(fib)
+   }
+} 
+
+func main(){
+firstNumber := 21
+   secondNumber := 31
+   for i := 21; i < 31; i++ {
+      fib := firstNumber
+      firstNumber = secondNumber
+      secondNumber = firstNumber+fib
+      fmt.Println(fib)
+   }
+} 
+
+ANSWER 2
+
+String input = "12346789";  //Input
+int output = 0;             //Output
+int number_length = 0;
+boolean stat = false;
+int hasilKali;
+
+// The first thing is to find the length of the number, is it 1 digit, 2 digits, etc.
+// The limit in 1 input must have a minimum of 4 numbers,
+// for example in the example input above the maximum number is 2 digits (because there are 8 characters).
+// If for example 3 digits, 467 - 321 =? , 89 - 467 =?, So the program is not clear
+while ((length_number < (input.length()/4))&&(!stat)) {
+	length_number++;
+	int a1 = Integer.parseInt(input.substring(0,length_number));  //take the first number
+	int a2 = Integer.parseInt(input.substring(length_number,length_number*2)); //second number
+	int a3 = Integer.parseInt(input.substring(length_number*2,length_number*3)); // dst...
+	int a4 = Integer.parseInt(input.substring(length_number*3,length_number*4));
+	hasilKali = a2 - a1;
+	hasilKali = hasilKali * (a3 - a2);
+	hasilKali = hasilKali * (a4 - a3);
+
+        // check the numbers that have been found
+        // If you find it, the result will automatically be 2 or 1
+	if ((hasilKali==1)||(hasilKali==2)) {
+		stat = true;
+	}
+}
+System.out.println(panjang_angka);
+
+// if stat = true, means the length of the numbers
+if (stat) {
+	int deret = input.length()/length_number;
+	System.out.println(deret);
+	for (int i = 0; i < (deret-1); i++) {
+		int a1 = Integer.parseInt(input.substring(i*length_number,length_number*(i+1)));
+		int a2 = Integer.parseInt(input.substring((i+1)*length_number,length_number*(i+2)));
+                
+                //If the number is missing, the difference will be 2 or > 1
+		if ((a2-a1)>1){
+			output = a1+1;
+		}
+	}
+}
+System.out.println(output);
+
+
+ANSWER 3
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"strconv"
+)
+
+// Employee
+type Employee struct {
+	ID   int    `json:"id"`
+	Name  string    `json:"name"`
+}
+// PostEmployee
+func PostEmployee(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var Emp Employee
+	if r.Method == "POST" {
+		if r.Header.Get("Content-Type") == "application/json" {
+			// parse from json
+			decodeJSON := json.NewDecoder(r.Body)
+			if err := decodeJSON.Decode(&Mhs); err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			// parse dari form
+			getID := r.PostFormValue("id")
+			id, _ := strconv.Atoi(getID)
+			getNim := r.PostFormValue("nim")
+			nim, _ := strconv.Atoi(getNim)
+			name := r.PostFormValue("name")
+			Emp = Employee{
+				ID:   id,
+				Name:  name,
+			}
+		}
+
+		dataEmployee, _ := json.Marshal(Emp) // to byte
+		w.Write(dataEmployee)                // print in browser
+		return
+	}
+
+	http.Error(w, "oops! you're not lucky", http.StatusNotFound)
+	return
+}
+
+func main() {
+	http.HandleFunc("/post_employee", PostEmployee)
+	fmt.Println("server running...")
+	if err := http.ListenAndServe(":7000", nil); err != nil {
+		log.Fatal(err)
+	}
+}
+
+ANSWER 4
+
+[root@server ~]# systemctl start docker   // running service docker
